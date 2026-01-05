@@ -1,14 +1,7 @@
 from flask import Flask, render_template, request, send_file
-from models import db, Resume
 from pdf_generator import create_pdf
-import json
-import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///resumes.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db.init_app(app)
 
 @app.route('/')
 def index():
@@ -29,7 +22,4 @@ def generate_pdf_route():
         mimetype='application/pdf'
     )
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+# IMPORTANT: do NOT use app.run() in production
