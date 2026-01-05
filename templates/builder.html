@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Builder</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="builder-container">
+      <!-- Left Panel: Editor -->
+      <div class="editor-panel">
+        <div class="editor-header">
+          <h2>Details</h2>
+          <a
+            href="{{ url_for('index') }}"
+            style="color: var(--primary); text-decoration: none"
+            >&larr; Home</a
+          >
+        </div>
+
+        <form id="resume-form">
+          <!-- Personal Info -->
+          <div class="form-section">
+            <div class="section-title">Personal Information</div>
+            <div class="form-group">
+              <label>Full Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="full_name"
+                placeholder="John Doe"
+              />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                placeholder="john@example.com"
+              />
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input
+                type="text"
+                class="form-control"
+                name="phone"
+                placeholder="+1 234 567 890"
+              />
+            </div>
+            <div class="form-group">
+              <label>LinkedIn</label>
+              <input
+                type="text"
+                class="form-control"
+                name="linkedin"
+                placeholder="linkedin.com/in/johndoe"
+              />
+            </div>
+            <div class="form-group">
+              <label>GitHub</label>
+              <input
+                type="text"
+                class="form-control"
+                name="github"
+                placeholder="github.com/johndoe"
+              />
+            </div>
+            <div class="form-group">
+              <label>Professional Summary</label>
+              <textarea
+                class="form-control"
+                name="summary"
+                placeholder="Brief summary of your expertise..."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Skills -->
+          <div class="form-section">
+            <div class="section-title">Skills</div>
+            <div class="form-group">
+              <label>Skills (comma separated)</label>
+              <textarea
+                class="form-control"
+                name="skills"
+                placeholder="Python, JavaScript, React, SQL..."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Experience -->
+          <div class="form-section">
+            <div class="section-title">
+              Experience
+              <button type="button" class="btn-add" onclick="addExperience()">
+                + Add
+              </button>
+            </div>
+            <div id="experience-list" class="dynamic-list"></div>
+          </div>
+
+          <!-- Projects -->
+          <div class="form-section">
+            <div class="section-title">
+              Projects
+              <button type="button" class="btn-add" onclick="addProject()">
+                + Add
+              </button>
+            </div>
+            <div id="projects-list" class="dynamic-list"></div>
+          </div>
+
+          <!-- Education -->
+          <div class="form-section">
+            <div class="section-title">
+              Education
+              <button type="button" class="btn-add" onclick="addEducation()">
+                + Add
+              </button>
+            </div>
+            <div id="education-list" class="dynamic-list"></div>
+          </div>
+
+          <!-- Certifications -->
+          <div class="form-section">
+            <div class="section-title">
+              Certifications
+              <button
+                type="button"
+                class="btn-add"
+                onclick="addCertification()"
+              >
+                + Add
+              </button>
+            </div>
+            <div id="certification-list" class="dynamic-list"></div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right Panel: Preview -->
+      <div class="preview-panel">
+        <div class="toolbar">
+          <div class="toolbar-group">
+            <label class="toolbar-label">Style</label>
+            <select
+              id="template-select"
+              onchange="changeTemplate(this.value)"
+              class="form-control"
+              style="width: auto; padding: 0.3rem"
+            >
+              <option value="classic">Classic Plain</option>
+              <option value="modern">Modern Minimal</option>
+            </select>
+          </div>
+
+          <div class="toolbar-group">
+            <label class="toolbar-label">Font</label>
+            <select
+              id="font-select"
+              onchange="changeFont(this.value)"
+              class="form-control"
+              style="width: auto; padding: 0.3rem"
+            >
+              <option value="sans">Sans-Serif</option>
+              <option value="serif">Serif</option>
+              <option value="mono">Monospace</option>
+            </select>
+          </div>
+          <button class="btn-primary" onclick="downloadPDF()">
+            Download PDF
+          </button>
+        </div>
+        <div class="ui-note">Note: Links in this document are clickable.</div>
+
+        <div id="resume-preview" class="resume-page template-classic font-sans">
+          <div class="resume-header">
+            <div class="resume-name" id="preview-name">John Doe</div>
+            <div class="resume-contact" id="preview-contact">
+              john@example.com | +1 234 567 890
+            </div>
+          </div>
+
+          <div
+            class="resume-section"
+            id="preview-summary-section"
+            style="display: none"
+          >
+            <div class="resume-section-title">Summary</div>
+            <div class="resume-text" id="preview-summary"></div>
+          </div>
+
+          <div
+            class="resume-section"
+            id="preview-skills-section"
+            style="display: none"
+          >
+            <div class="resume-section-title">Skills</div>
+            <div class="resume-text" id="preview-skills"></div>
+          </div>
+
+          <div
+            class="resume-section"
+            id="preview-experience-section"
+            style="display: none"
+          >
+            <div class="resume-section-title">Experience</div>
+            <div id="preview-experience"></div>
+          </div>
+
+          <div
+            class="resume-section"
+            id="preview-projects-section"
+            style="display: none"
+          >
+            <div class="resume-section-title">Projects</div>
+            <div id="preview-projects"></div>
+          </div>
+
+          <div
+            class="resume-section"
+            id="preview-education-section"
+            style="display: none"
+          >
+            <div class="resume-section-title">Education</div>
+            <div id="preview-education"></div>
+          </div>
+
+          <div
+            class="resume-section"
+            id="preview-certification-section"
+            style="display: none"
+          >
+            <div class="resume-section-title">Certifications</div>
+            <div id="preview-certification"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
