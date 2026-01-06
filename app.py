@@ -22,4 +22,5 @@ def generate_pdf_route():
         mimetype='application/pdf'
     )
 
-# IMPORTANT: do NOT use app.run() in production
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)

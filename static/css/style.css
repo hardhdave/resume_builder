@@ -21,7 +21,7 @@ body {
   background-color: #f4f6f8;
   color: var(--text-main);
   height: 100vh;
-  overflow: hidden; /* For split layout */
+  overflow: auto;
 }
 
 /* Typography */
@@ -453,9 +453,18 @@ textarea.form-control {
   .preview-panel {
     width: 100%;
     height: auto;
+    padding: 1rem;
   }
   .resume-page {
     width: 100%;
-    padding: 10mm;
+    padding: 8mm;
+  }
+  .toolbar {
+    position: static;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .ui-note {
+    margin: 0.5rem 0 1rem 0;
   }
 }
