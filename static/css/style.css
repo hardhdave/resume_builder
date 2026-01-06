@@ -103,6 +103,11 @@ h6 {
   margin-bottom: 2rem;
 }
 
+.mobile-actions {
+  display: none;
+  gap: 0.5rem;
+}
+
 .form-section {
   margin-bottom: 2rem;
   background: white;
@@ -474,6 +479,9 @@ textarea.form-control {
   }
   .mobile-toggle-btn {
     display: inline-block;
+  }
+  .mobile-actions {
+    display: flex;
   }
   .builder-container.mobile-details .preview-panel {
     display: none;
