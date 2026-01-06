@@ -241,6 +241,10 @@ textarea.form-control {
   margin: -1rem 0 1rem 0;
 }
 
+.mobile-toggle-btn {
+  display: none;
+}
+
 .style-switcher {
   display: flex;
   gap: 0.5rem;
@@ -452,8 +456,9 @@ textarea.form-control {
   .editor-panel,
   .preview-panel {
     width: 100%;
-    height: auto;
+    height: calc(100vh - 120px);
     padding: 1rem;
+    overflow-y: auto;
   }
   .resume-page {
     width: 100%;
@@ -466,5 +471,20 @@ textarea.form-control {
   }
   .ui-note {
     margin: 0.5rem 0 1rem 0;
+  }
+  .mobile-toggle-btn {
+    display: inline-block;
+  }
+  .builder-container.mobile-details .preview-panel {
+    display: none;
+  }
+  .builder-container.mobile-details .editor-panel {
+    display: flex;
+  }
+  .builder-container.mobile-preview .editor-panel {
+    display: none;
+  }
+  .builder-container.mobile-preview .preview-panel {
+    display: flex;
   }
 }

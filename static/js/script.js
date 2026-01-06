@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initial dummy data for better UX
   updatePreview();
+
+  initMobileMode();
 });
 
 function updatePreview() {
@@ -78,6 +80,35 @@ function changeFont(val) {
   page.classList.remove("font-sans", "font-serif", "font-mono");
   // Add selected
   page.classList.add(`font-${val}`);
+}
+
+function initMobileMode() {
+  const container = document.querySelector(".builder-container");
+  const toggleBtn = document.getElementById("mobile-toggle-btn");
+  const isMobile = window.innerWidth <= 900;
+  if (isMobile) {
+    container.classList.add("mobile-details");
+    if (toggleBtn) {
+      toggleBtn.textContent = "Preview";
+    }
+  } else {
+    container.classList.remove("mobile-details", "mobile-preview");
+  }
+}
+
+function toggleMobileMode() {
+  const container = document.querySelector(".builder-container");
+  const toggleBtn = document.getElementById("mobile-toggle-btn");
+  if (!container) return;
+  if (container.classList.contains("mobile-details")) {
+    container.classList.remove("mobile-details");
+    container.classList.add("mobile-preview");
+    if (toggleBtn) toggleBtn.textContent = "Details";
+  } else {
+    container.classList.remove("mobile-preview");
+    container.classList.add("mobile-details");
+    if (toggleBtn) toggleBtn.textContent = "Preview";
+  }
 }
 
 function renderPreview(data) {
